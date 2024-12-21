@@ -52,8 +52,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.recyceviewcomposeexample.components.ButtonTest
 import com.example.recyceviewcomposeexample.components.CoilTest
+import com.example.recyceviewcomposeexample.components.LazyCoumnTest
 import com.example.recyceviewcomposeexample.components.PasswordTest
 import com.example.recyceviewcomposeexample.components.TextTest
+import com.example.recyceviewcomposeexample.components.TextfieldTest
 import com.example.recyceviewcomposeexample.ui.theme.RecyceViewComposeExampleTheme
 import com.example.recyceviewcomposeexample.viewmodel.CalculatorViewModel
 
@@ -135,6 +137,12 @@ class TestActivity : ComponentActivity() {
             ComponentName.PASSWORD_TEXT ->{
                 PasswordTest()
             }
+            ComponentName.LAZY_COULMN ->{
+                LazyCoumnTest()
+            }
+            ComponentName.TEXTFIELD ->{
+                TextfieldTest()
+            }
             else ->{
                 TextTest()
             }
@@ -148,6 +156,7 @@ class TestActivity : ComponentActivity() {
         list.add(ComponentName.COIL)
         list.add(ComponentName.PASSWORD_TEXT)
         list.add(ComponentName.LAZY_COULMN)
+        list.add(ComponentName.TEXTFIELD)
         return list
     }
 

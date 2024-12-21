@@ -74,5 +74,6 @@ dependencies {
     //implementation(libs.androidx.)
 implementation("androidx.appcompat:appcompat:1.6.0")
 
+    implementation(libs.room)
 
 }
