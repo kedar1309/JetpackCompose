@@ -1,8 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas") // Store Room schemas
+    }
+}
 android {
     namespace = "com.example.recyceviewcomposeexample"
     compileSdk = 34
@@ -71,9 +77,16 @@ dependencies {
     implementation(libs.androidx.livedata)
     implementation(libs.androidx.nav)
     implementation(libs.io.coil)
-    //implementation(libs.androidx.)
-implementation("androidx.appcompat:appcompat:1.6.0")
 
-    implementation(libs.room)
+implementation("androidx.appcompat:appcompat:1.6.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.room.runtime) // Room runtime
+    kapt(libs.room.compiler)          // Room compiler for annotation processing
+    implementation(libs.room.ktx)
+    implementation(libs.retrofit.ktx)
+    implementation(libs.retrofit.ktx.gson)
+    //implementation(libs.room.ktx.coroutine)
+   // implementation ("androidx.room:room-coroutines:2.5.0")
+
 
 }

@@ -40,9 +40,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -52,16 +56,26 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.recyceviewcomposeexample.components.ButtonTest
 import com.example.recyceviewcomposeexample.components.CoilTest
-import com.example.recyceviewcomposeexample.components.LazyCoumnTest
+import com.example.recyceviewcomposeexample.components.HyperlinkTest
 import com.example.recyceviewcomposeexample.components.PasswordTest
+import com.example.recyceviewcomposeexample.components.RetrofitTest
+import com.example.recyceviewcomposeexample.components.RoomTest
 import com.example.recyceviewcomposeexample.components.TextTest
-import com.example.recyceviewcomposeexample.components.TextfieldTest
+import com.example.recyceviewcomposeexample.retrofit.RetrofitViewModel
+import com.example.recyceviewcomposeexample.room.PersonDatabase
+import com.example.recyceviewcomposeexample.room.PersonRepository
+import com.example.recyceviewcomposeexample.room.RoomViewModel
 import com.example.recyceviewcomposeexample.ui.theme.RecyceViewComposeExampleTheme
 import com.example.recyceviewcomposeexample.viewmodel.CalculatorViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TestActivity : ComponentActivity() {
 
      val componentName = "componentName"
+
+
+   // private val viewModel = ViewModelProvider(this).get(RoomViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +90,11 @@ class TestActivity : ComponentActivity() {
 
             }
         }
+
+    }
+    override fun onResume() {
+        super.onResume()
+
     }
 
     @Composable
@@ -137,12 +156,19 @@ class TestActivity : ComponentActivity() {
             ComponentName.PASSWORD_TEXT ->{
                 PasswordTest()
             }
-            ComponentName.LAZY_COULMN ->{
-                LazyCoumnTest()
+            ComponentName.ROOM ->{
+
+                val userdo = PersonDatabase.getDataBase(LocalContext.current).PersonDAO()
+                val noteViewModel = RoomViewModel(userdo)
+                RoomTest(noteViewModel, LocalContext.current)
             }
-            ComponentName.TEXTFIELD ->{
-                TextfieldTest()
+            ComponentName.RETROFIT ->{
+                RetrofitTest(RetrofitViewModel())
             }
+            ComponentName.HYPERLINK ->{
+                HyperlinkTest()
+          }
+
             else ->{
                 TextTest()
             }
@@ -156,7 +182,9 @@ class TestActivity : ComponentActivity() {
         list.add(ComponentName.COIL)
         list.add(ComponentName.PASSWORD_TEXT)
         list.add(ComponentName.LAZY_COULMN)
-        list.add(ComponentName.TEXTFIELD)
+        list.add(ComponentName.ROOM)
+        list.add(ComponentName.RETROFIT)
+        list.add(ComponentName.HYPERLINK)
         return list
     }
 
